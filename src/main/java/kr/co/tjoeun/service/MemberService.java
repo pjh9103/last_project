@@ -1,15 +1,24 @@
 package kr.co.tjoeun.service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import kr.co.tjoeun.model.Member;
+import kr.co.tjoeun.model.MemberContext;
 import kr.co.tjoeun.repository.MemberInfoRepository;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Service
-public class MemberService {
+@RequiredArgsConstructor
+public class MemberService implements UserDetailsService {
 
 	private final MemberInfoRepository memberInfoRepository;
 
@@ -17,25 +26,26 @@ public class MemberService {
 		this.memberInfoRepository = memberInfoRepository;
 	}
 
-	/**
-	 *  1. 모든 소스는 검증을 해야해
-	 *  2. 소스가 검증에 만족을 하면 그 데이터는 가공이 가능해
-	 *  3. 가공이 가능하다는 것은 (조회, 수정, 삭제)
-	 *  4. 그런데 여기서 조회, 수정, 삭제를 하려 하는데 ?
-	 *  5. 예상치 못 하는 일이 일어나면 어떻게할꺼야 ?
-	 *  try ~ catch ~ 를 사용 하는 거야
-	 *  내가 여기서 이 소스를 시도할 껀데 만약에 여기서 내가 생각한 내용과 다르게 동작한다면 예외를 던져줄래 ?
-	 *  예외 throw new ----- (); 잘못된 인자값을 넣었다
-	 */
-
-	// 회원정보조회
-	public Member findByUserId(String userId) {
-		isNotBlank(userId);
-		Member findByUsername = memberInfoRepository.findByUserId(userId);
-		if (findByUsername == null)
+	@Override
+	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+		Member member = memberInfoRepository.findByUserId(userId);
+		if (member == null)
 			throw new UserNotFoundException("유저가 존재하지 않습니다.");
-		return findByUsername;
+		return new MemberContext(member, addAuthorities(member));
 	}
+
+	private Set<GrantedAuthority> addAuthorities(Member member) {
+		Set<GrantedAuthority> grantedAuthority = new HashSet<GrantedAuthority>();
+		grantedAuthority.add(new SimpleGrantedAuthority(member.getRole()));
+		return grantedAuthority;
+	}
+
+	/**
+	 * 1. 모든 소스는 검증을 해야해 2. 소스가 검증에 만족을 하면 그 데이터는 가공이 가능해 3. 가공이 가능하다는 것은 (조회, 수정,
+	 * 삭제) 4. 그런데 여기서 조회, 수정, 삭제를 하려 하는데 ? 5. 예상치 못 하는 일이 일어나면 어떻게할꺼야 ? try ~ catch
+	 * ~ 를 사용 하는 거야 내가 여기서 이 소스를 시도할 껀데 만약에 여기서 내가 생각한 내용과 다르게 동작한다면 예외를 던져줄래 ? 예외
+	 * throw new ----- (); 잘못된 인자값을 넣었다
+	 */
 
 	// 회원 가입
 	public Member register(Member member) {
@@ -51,7 +61,7 @@ public class MemberService {
 		}
 	}
 
-	//정보 체크
+	// 정보 체크
 	private void validationCheck(Member member) {
 		isNotBlank(member.getUsername());
 		isNotBlank(member.getUserId());
@@ -59,18 +69,16 @@ public class MemberService {
 		member.getBirth();
 		isNotBlank(member.getUserPhone());
 
-
 	}
 
+	// 이름 , ID, PW, 연락처 
+	private void isNotBlank(Object str) { 
+		if (str == null ||str.equals("")) 
+		throw new IllegalArgumentException("값이 비어있습니다.");
+	} 
 
-	//이름 , ID, PW, 연락처
-	private  void isNotBlank(Object str) {
-		if (str == null || str.equals("")) {
-			throw new IllegalArgumentException("값이 비어있습니다.");
-		}
-	}
-	//Pw 길이
-	private  void isPasswordRangeCheck(String password) {
+	// Pw
+	private void isPasswordRangeCheck(String password) {
 		int length = password.length();
 		if (length < 10 && length >= 50) {
 			throw new IllegalArgumentException("패스워드 길이는 10자리 이상 50 이하이어야합니다.");

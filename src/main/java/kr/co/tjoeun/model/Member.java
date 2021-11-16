@@ -33,6 +33,10 @@ public class Member {
 
 	@Column(name = "user_phone", nullable = false)
 	private String userPhone;
+	
+	@Column(name = "role", nullable = false)
+	private String role;
+
 
 	public Long getId() {
 		return id;
@@ -57,5 +61,9 @@ public class Member {
 	public String getUserPhone() {
 		return userPhone;
 	}
+	public String getRole() {
+		return role;
+	}
+
 
 }
