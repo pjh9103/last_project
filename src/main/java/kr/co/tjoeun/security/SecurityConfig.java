@@ -1,5 +1,6 @@
 package kr.co.tjoeun.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,16 +13,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import kr.co.tjoeun.repository.MemberInfoRepository;
-import kr.co.tjoeun.service.MemberService;
-import lombok.RequiredArgsConstructor;
-
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
-	
+	@Autowired
 	private UserDetailsService memberService;
 	
 	
@@ -41,16 +37,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.antMatchers("/", "/login", "/join").permitAll()
-			.anyRequest().authenticated()
+			.antMatchers("/", "/login", "/join", "/login-proc").permitAll()
 		.and()
 			.formLogin()
 			.usernameParameter("userId")
 			.passwordParameter("password")
-			.loginPage("login")
-			.loginProcessingUrl("login-proc")
-			.successForwardUrl("/")
-			.failureForwardUrl("/login");
+			.loginPage("/login")
+			.loginProcessingUrl("/login-proc")
+			.successForwardUrl("/");
 	}
 	
 	@Bean 
