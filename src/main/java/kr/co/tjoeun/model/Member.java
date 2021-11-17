@@ -35,7 +35,7 @@ public class Member {
 	private String phone;
 	
 	@Column(name = "role", nullable = false)
-	private String role = "ROLE_ANONYMOUS";
+	private String role = "ROLE_USER";
 
 	public Member(String userId,  String password, String username, String birth, String phone) {
 		this.userId = userId;

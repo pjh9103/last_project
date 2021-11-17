@@ -16,8 +16,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
+
+	private final UserDetailsService memberService;
+
+	public SecurityConfig(UserDetailsService memberService) {
+		this.memberService = memberService;
+	}
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(memberService);
+	}
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
@@ -28,7 +38,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/","/join").permitAll();
+				.antMatchers("/join").permitAll()
+				.antMatchers("/**").hasRole("USER");
+
+		http.formLogin()
+				.loginProcessingUrl("/login_proc")
+				.loginPage("/login")
+				.usernameParameter("userId")
+				.defaultSuccessUrl("/main")
+				.permitAll();
 	}
 
 	@Bean
