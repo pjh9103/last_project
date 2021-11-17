@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -28,25 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		// TODO Auto-generated method stub
 		web.ignoring()
 		.requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	}
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests()
-			.antMatchers("/", "/login", "/join", "/login-proc").permitAll()
-		.and()
-			.formLogin()
-			.usernameParameter("userId")
-			.passwordParameter("password")
-			.loginPage("/login")
-			.loginProcessingUrl("/login-proc")
-			.successForwardUrl("/");
-	}
-	
 	@Bean 
 	public PasswordEncoder passWordEncoder() {
 		return new BCryptPasswordEncoder();
