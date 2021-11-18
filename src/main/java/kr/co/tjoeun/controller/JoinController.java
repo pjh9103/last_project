@@ -22,6 +22,6 @@ public class JoinController {
     @PostMapping("/join")
     public String index(@ModelAttribute JoinDto joinDto) {
         joinService.join(joinDto);
-        return "redirect:/";
+        return "redirect:/main";
     }
 }

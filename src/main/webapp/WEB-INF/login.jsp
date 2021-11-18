@@ -106,6 +106,9 @@
         <div class="join-input">
             <input type="password" name="password" class="password input-style" placeholder="패스워드를 입력해주세요">
         </div>
+        <div>
+            ${requestScope.loginFailMsg}
+        </div>
         <div class="btn-row">
             <button type="button" class="btn" onclick="login()">
                 로그인
