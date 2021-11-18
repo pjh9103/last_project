@@ -11,7 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import static kr.co.tjoeun.security.SecurityConstants.*;
 
@@ -21,8 +24,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	private final UserDetailsService memberService;
 
-	public SecurityConfig(UserDetailsService memberService) {
+	private final AuthenticationFailureHandler MemberLoginFailHandler;
+
+	public SecurityConfig(UserDetailsService memberService, AuthenticationFailureHandler MemberLoginFailHandler) {
 		this.memberService = memberService;
+		this.MemberLoginFailHandler = MemberLoginFailHandler;
 	}
 
 	// 그냥 공식임....ㅅㅂ...
@@ -40,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers(PATH_JOIN).permitAll()
+				.antMatchers(PATH_JOIN, "/login/**").permitAll()
 				.antMatchers(PATH_ALL).hasRole(ROLE_USER);
 
 		http.formLogin()
@@ -48,18 +54,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.loginPage(PATH_LOGIN)
 				.usernameParameter(PARAMETER_USER_ID)
 				.defaultSuccessUrl(PATH_MAIN)
-				.failureHandler(new MemberLoginFailHandler())
+				.failureHandler(MemberLoginFailHandler)
 				.permitAll();
+		http.sessionManagement().maximumSessions(1);
 
-		http.addFilterBefore(new MemberSuccessRedirect(), UsernamePasswordAuthenticationFilter.class);
 
 		http.logout()
 				.logoutUrl("/logout")
 				.logoutSuccessUrl(PATH_MAIN);
 
+
+		http.addFilterBefore(new MemberSuccessRedirect(), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(getCharacterEncodingFilter(), CsrfFilter.class);
 	}
+
+	private CharacterEncodingFilter getCharacterEncodingFilter() {
+		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+		characterEncodingFilter.setEncoding("UTF-8");
+		characterEncodingFilter.setForceEncoding(true);
+		return characterEncodingFilter;
+	}
+
+
 	@Bean
 	public PasswordEncoder passWordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
+
 }

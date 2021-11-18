@@ -3,6 +3,7 @@ package kr.co.tjoeun.service;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +16,8 @@ import kr.co.tjoeun.model.MemberContext;
 import kr.co.tjoeun.repository.MemberInfoRepository;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements UserDetailsService {
@@ -23,10 +26,12 @@ public class MemberServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-		Member member = memberInfoRepository.findByUserId(userId);
-		if (member == null)
-			throw new UserNotFoundException("유저가 존재하지 않습니다.");
-		return new MemberContext(member, addAuthorities(member), member);
+		try {
+			Member member = memberInfoRepository.findByUserId(userId);
+			return new MemberContext(member, addAuthorities(member), member);
+		} catch (EntityNotFoundException | DataIntegrityViolationException ex) {
+			throw new UserNotFoundException("이미 있는 계정입니다.");
+		}
 	}
 
 	private Set<GrantedAuthority> addAuthorities(Member member) {

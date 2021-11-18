@@ -14,8 +14,6 @@ import static kr.co.tjoeun.security.SecurityConstants.*;
 
 public class MemberSuccessRedirect implements Filter {
 
-
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

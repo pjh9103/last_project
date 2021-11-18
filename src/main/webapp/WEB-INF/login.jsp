@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
+         pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -12,7 +12,7 @@
     <!-- 제이쿼리 ui -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+            src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
     <title>Document</title>
     <style>
         * {
@@ -97,36 +97,39 @@
 </head>
 
 <body>
-    <form action="${pageContext.request.contextPath}/login_proc" method="post" class="loginForm">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <h2>Login</h2>
-        <div class="join-input">
-            <input type="text" name="userId" class="id input-style" placeholder="아이디를 입력해주세요">
-        </div>
-        <div class="join-input">
-            <input type="password" name="password" class="password input-style" placeholder="패스워드를 입력해주세요">
-        </div>
-        <div>
-            ${requestScope.loginFailMsg}
-        </div>
-        <div class="btn-row">
-            <button type="button" class="btn" onclick="login()">
-                로그인
-            </button>
-            <button type="button" class="btn" onclick="join()">
-                회원가입
-            </button>
-        </div>
-    </form>
+<form action="${pageContext.request.contextPath}/login_proc" method="post" class="loginForm">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <h2>Login</h2>
+    <div class="join-input">
+        <input type="text" name="userId" class="id input-style" placeholder="아이디를 입력해주세요">
+    </div>
+    <div class="join-input">
+        <input type="password" name="password" class="password input-style" placeholder="패스워드를 입력해주세요">
+    </div>
+    <div>
+        <c:if test="${exceptionMessage != null}">
+            <p> Error : <c:out value="${exceptionMessage}"/></p>
+        </c:if>
+    </div>
+    <div class="btn-row">
+        <button type="button" class="btn" onclick="login()">
+            로그인
+        </button>
+        <button type="button" class="btn" onclick="join()">
+            회원가입
+        </button>
+    </div>
+</form>
 
-    <script>
-        function login() {
-            document.querySelector("form").submit();
-        }
-        function join() {
-            location.href="/join";
-        }
-    </script>
+<script>
+    function login() {
+        document.querySelector("form").submit();
+    }
+
+    function join() {
+        location.href = "/join";
+    }
+</script>
 </body>
 
 </html>
