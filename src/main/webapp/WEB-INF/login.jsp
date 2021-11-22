@@ -33,7 +33,7 @@
             position: absolute;
             width: 500px;
             height: 400px;
-            padding: 30px, 20px;
+            padding: 30px 20px;
             text-align: center;
             top: 60%;
             left: 50%;
@@ -107,7 +107,7 @@
         <input type="password" name="password" class="password input-style" placeholder="패스워드를 입력해주세요">
     </div>
     <div>
-        <c:if test="${exceptionMessage != null}">
+        <c:if test="${error == true}">
             <p> Error : <c:out value="${exceptionMessage}"/></p>
         </c:if>
     </div>

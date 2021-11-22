@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -163,20 +164,9 @@
             <h2>이 달의 영화</h2>
             <div class="slide1 wrap slide-wrap" data-slide-duration="800">
                 <div class="slide-draggable flex">
-                    <div class="poster"><span>1</span><img class="poster-img" src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"></div>
-                    <div class="poster"><span>2</span><img class="poster-img" src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"></div>
-                    <div class="poster"><span>3</span><img class="poster-img" src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"></div>
-                    <div class="poster"><span>4</span><img class="poster-img" src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"></div>
-                    <div class="poster"><span>5</span><img class="poster-img" src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"></div>
-                    <div class="poster"><span>6</span><img class="poster-img" src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"></div>
-                    <div class="poster"><span>7</span><img class="poster-img" src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"></div>
-                    <div class="poster"><span>8</span><img class="poster-img" src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"></div>
-                    <div class="poster"><span>9</span><img class="poster-img" src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"></div>
-                    <div class="poster"><span>10</span><img class="poster-img" src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"></div>
-                    <div class="poster"><span>11</span><img class="poster-img" src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"></div>
-                    <div class="poster"><span>12</span><img class="poster-img" src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"></div>
-                    <div class="poster"><span>13</span><img class="poster-img" src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"></div>
-                    <div class="poster"><span>14</span><img class="poster-img" src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"></div>
+                    <c:forEach  var="movie" varStatus="status" items="${movie}" begin="1">
+                        <div class="poster"><span>${status.index}</span><img class="poster-img" src="https://image.tmdb.org/t/p/w500/${movie.posterImg}"></div>
+                    </c:forEach>
                 </div>
             </div>
         </div>  

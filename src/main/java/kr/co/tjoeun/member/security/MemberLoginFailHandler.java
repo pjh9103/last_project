@@ -1,21 +1,15 @@
-package kr.co.tjoeun.security;
+package kr.co.tjoeun.member.security;
 
-import lombok.extern.apachecommons.CommonsLog;
-import org.hibernate.proxy.EntityNotFoundDelegate;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityNotFoundException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 @Component
 public class MemberLoginFailHandler extends SimpleUrlAuthenticationFailureHandler {

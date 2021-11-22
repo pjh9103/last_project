@@ -1,4 +1,4 @@
-package kr.co.tjoeun.model;
+package kr.co.tjoeun.member.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

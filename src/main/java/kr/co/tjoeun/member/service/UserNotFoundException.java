@@ -1,4 +1,4 @@
-package kr.co.tjoeun.service;
+package kr.co.tjoeun.member.service;
 
 public class UserNotFoundException extends RuntimeException {
 

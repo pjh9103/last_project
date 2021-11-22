@@ -1,4 +1,4 @@
-package kr.co.tjoeun.security;
+package kr.co.tjoeun.member.security;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import static kr.co.tjoeun.security.SecurityConstants.*;
+import static kr.co.tjoeun.member.security.SecurityConstants.*;
 
 @Configuration
 @EnableWebSecurity
@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		this.MemberLoginFailHandler = MemberLoginFailHandler;
 	}
 
-	// 그냥 공식임....ㅅㅂ...
+
 	@Override
 	public void configure(WebSecurity web) {
 		web.ignoring()
@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers(PATH_JOIN, "/login/**").permitAll()
+				.antMatchers("/favicon.ico", PATH_JOIN, "/login/**","/main").permitAll()
 				.antMatchers(PATH_ALL).hasRole(ROLE_USER);
 
 		http.formLogin()

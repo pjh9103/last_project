@@ -28,7 +28,7 @@
             position: absolute;
             width: 500px;
             height: 400px;
-            padding: 30px, 20px;
+            padding: 30px 20px;
             text-align: center;
             top: 48%;
             left: 50%;
@@ -97,6 +97,9 @@
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <h2>회원가입</h2>
         <div class="join-input">
+            <input type="text" id="username" name="username" class="input-style" placeholder="이름을 입력해주세요">
+        </div>
+        <div class="join-input">
             <input type="text" id="userId" name="userId" class="input-style" placeholder="아이디를 입력해주세요">
         </div>
         <div class="join-input">
@@ -122,6 +125,12 @@
         }
 
         function validation() {
+            let username = document.querySelector('#username').value;
+            if(!username) {
+                alert("이름을 입력해주세요")
+                return
+            }
+
             let userId = document.querySelector('#userId').value;
             if(!userId) {
                 alert("아이디를 입력해주세요")

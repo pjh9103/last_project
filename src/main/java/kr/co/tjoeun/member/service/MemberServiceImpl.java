@@ -1,4 +1,4 @@
-package kr.co.tjoeun.service;
+package kr.co.tjoeun.member.service;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,9 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import kr.co.tjoeun.model.Member;
-import kr.co.tjoeun.model.MemberContext;
-import kr.co.tjoeun.repository.MemberInfoRepository;
+import kr.co.tjoeun.member.model.Member;
+import kr.co.tjoeun.member.model.MemberContext;
+import kr.co.tjoeun.member.repository.MemberInfoRepository;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityNotFoundException;

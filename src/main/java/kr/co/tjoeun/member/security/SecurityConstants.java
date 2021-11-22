@@ -1,4 +1,4 @@
-package kr.co.tjoeun.security;
+package kr.co.tjoeun.member.security;
 
 public class SecurityConstants {
 

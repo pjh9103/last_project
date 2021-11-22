@@ -1,4 +1,4 @@
-package kr.co.tjoeun.security;
+package kr.co.tjoeun.member.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import static kr.co.tjoeun.security.SecurityConstants.*;
+import static kr.co.tjoeun.member.security.SecurityConstants.*;
 
 public class MemberSuccessRedirect implements Filter {
 

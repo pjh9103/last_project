@@ -1,8 +1,8 @@
-package kr.co.tjoeun.service;
+package kr.co.tjoeun.member.service;
 
-import kr.co.tjoeun.controller.dto.JoinDto;
-import kr.co.tjoeun.model.Member;
-import kr.co.tjoeun.repository.MemberInfoRepository;
+import kr.co.tjoeun.member.controller.dto.JoinDto;
+import kr.co.tjoeun.member.model.Member;
+import kr.co.tjoeun.member.repository.MemberInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

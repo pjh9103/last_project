@@ -1,4 +1,4 @@
-package kr.co.tjoeun.controller;
+package kr.co.tjoeun.member.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

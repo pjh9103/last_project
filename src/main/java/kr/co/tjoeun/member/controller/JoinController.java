@@ -1,7 +1,7 @@
-package kr.co.tjoeun.controller;
+package kr.co.tjoeun.member.controller;
 
-import kr.co.tjoeun.controller.dto.JoinDto;
-import kr.co.tjoeun.service.JoinService;
+import kr.co.tjoeun.member.controller.dto.JoinDto;
+import kr.co.tjoeun.member.service.JoinService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,8 +1,6 @@
-package kr.co.tjoeun.controller.dto;
+package kr.co.tjoeun.member.controller.dto;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import kr.co.tjoeun.model.Member;
+import kr.co.tjoeun.member.model.Member;
 
 public class JoinDto {
 
