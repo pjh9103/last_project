@@ -161,24 +161,17 @@
     </div>
     <div class="movie-area">
         <div class='row'>
-            <h2>이 달의 영화</h2>
-            <div class="slide1 wrap slide-wrap" data-slide-duration="800">
-                <div class="slide-draggable flex">
-                    <c:forEach  var="movie" varStatus="status" items="${movie}" begin="1">
-                        <div class="poster"><span>${status.index}</span><img class="poster-img" src="https://image.tmdb.org/t/p/w500/${movie.posterImg}"></div>
-                    </c:forEach>
+            <c:forEach  var="movie" varStatus="status" items="${movie}">
+                <h2>${movie.key}</h2>
+                <div class="slide1 wrap slide-wrap" data-slide-duration="800">
+                    <div class="slide-draggable flex">
+                        <c:forEach  var="movies" varStatus="status" items="${movie.value}" begin="1">
+                            <div class="poster"><span>${status.index}</span><img class="poster-img" src="https://image.tmdb.org/t/p/w500/${movies.posterImg}"></div>
+                        </c:forEach>
+                    </div>
                 </div>
-            </div>
-        </div>  
-        <div class='row'>
-            <h2>공포</h2>
-            <div class="slide1 wrap slide-wrap" data-slide-duration="800">
-                <div class="slide-draggable flex">
-                    <div class="poster"><img class="poster-img" src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"></div>
-                    <div class="item blue"></div>
-                </div>
-            </div>
-        </div>  
+            </c:forEach>
+        </div>
     </div>
     <script>
         function dragSlide__init() {
