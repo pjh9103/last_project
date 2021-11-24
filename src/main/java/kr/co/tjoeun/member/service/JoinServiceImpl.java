@@ -14,7 +14,13 @@ public class JoinServiceImpl implements JoinService {
     private final MemberInfoRepository memberInfoRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public void join(JoinDto joinDto) {
+    public JoinServiceImpl(MemberInfoRepository memberInfoRepository, PasswordEncoder passwordEncoder) {
+		super();
+		this.memberInfoRepository = memberInfoRepository;
+		this.passwordEncoder = passwordEncoder;
+	}
+
+	public void join(JoinDto joinDto) {
         Member joinMember = joinDto.toJoinMember();
         joinMember.setPassword(passwordEncoder.encode(joinMember.getPassword()));
         memberInfoRepository.save(joinMember);

@@ -23,6 +23,11 @@ import javax.persistence.EntityNotFoundException;
 public class MemberServiceImpl implements UserDetailsService {
 
 	private final MemberInfoRepository memberInfoRepository;
+	
+	public MemberServiceImpl(MemberInfoRepository memberInfoRepository) {
+		super();
+		this.memberInfoRepository = memberInfoRepository;
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {

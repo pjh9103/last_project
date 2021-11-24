@@ -15,7 +15,12 @@ public class MainController {
 
     private final MovieClient externalTMDBClient;
 
-    @GetMapping(value = {"/", "/main"})
+    public MainController(MovieClient externalTMDBClient) {
+		super();
+		this.externalTMDBClient = externalTMDBClient;
+	}
+
+	@GetMapping(value = {"/", "/main"})
     public String index(Model model) throws IllegalAccessException {
         Map<String, List<MovieInfo>> post = externalTMDBClient.post();
 

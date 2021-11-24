@@ -14,7 +14,12 @@ public class JoinController {
 
     private final JoinService joinService;
 
-    @GetMapping("/join")
+    public JoinController(JoinService joinService) {
+		super();
+		this.joinService = joinService;
+	}
+
+	@GetMapping("/join")
     public String index() {
         return "join";
     }
